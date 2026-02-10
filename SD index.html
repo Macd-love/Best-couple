@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<title>BAHASHA YA MAPENZI 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:
+    radial-gradient(circle at center, rgba(255,215,0,.25), rgba(0,0,0,.75)),
+    url("background.jpg");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* LOCK SCREEN */
+#lock{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:20;
+}
+.lock-box{
+  background:#fff;
+  padding:28px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+}
+.lock-box h2{
+  color:#000;
+  text-shadow:0 0 10px #ffd700;
+}
+.lock-box input{
+  padding:12px;
+  width:230px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  text-align:center;
+}
+.lock-box input::placeholder{
+  color:#555;
+}
+.lock-box button{
+  margin-top:18px;
+  padding:12px 30px;
+  border:none;
+  background:#ff2d75;
+  color:#fff;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ENVELOPE */
+.envelope{
+  width:310px;
+  height:210px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 35px 90px rgba(0,0,0,.75);
+  position:relative;
+  cursor:pointer;
+  transition:transform .6s;
+  z-index:2;
+}
+.envelope:hover{ transform:scale(1.07); }
+
+.flap{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#ff2d75,#ff9abf);
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transition:transform 1s;
+  z-index:3;
+}
+
+.letter{
+  position:absolute;
+  inset:12px;
+  background:rgba(255,255,255,.97);
+  border-radius:12px;
+  padding:22px;
+  text-align:center;
+  transform:translateY(130%);
+  transition:transform 1.4s cubic-bezier(.22,1,.36,1);
+  overflow-y:auto;
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+  transform-origin:top;
+}
+.envelope.open .letter{
+  transform:translateY(0);
+}
+
+/* TEXT STYLE GLOBAL */
+.upper-text{
+  color:#000;
+  font-size:17px;
+  line-height:1.8;
+  text-transform:uppercase;
+  text-shadow:
+    0 0 6px #ffd700,
+    0 0 14px #ffea00,
+    0 0 24px #ffd700;
+}
+
+/* NAME SPECIAL */
+.name-glow{
+  font-weight:800;
+  text-shadow:
+    0 0 8px #ffd700,
+    0 0 18px #ffea00,
+    0 0 32px #ffd700;
+  animation:pulse 3s infinite;
+}
+@keyframes pulse{
+  0%{text-shadow:0 0 8px #ffd700;}
+  50%{text-shadow:0 0 28px #ffea00;}
+  100%{text-shadow:0 0 8px #ffd700;}
+}
+
+/* EXTRA LINE */
+.extra{
+  margin-top:16px;
+  font-weight:bold;
+  font-size:18px;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed;
+  bottom:-30px;
+  animation:floatUp 7s linear forwards;
+  pointer-events:none;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(.8); opacity:1;}
+  100%{transform:translateY(-110vh) scale(1.8); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="lock">
+  <div class="lock-box">
+    <h2>💖 INGIZA NENOSIRI 💖</h2>
+    <input type="password" id="pass" placeholder="ANDIKA JINA LAKO LA KWANZA MAMA MTU">
+    <br>
+    <button onclick="unlock()">FUNGUA</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" onclick="openEnvelope()">
+  <div class="flap"></div>
+
+  <div class="letter">
+    <h2 class="upper-text">
+      HAPPY VALENTINE DAY 💕 
+      <span class="name-glow">SHAKIRA</span>
+    </h2>
+
+    <p class="upper-text">
+      HAPPY VALENTINE DAY TAMU YANGU,  
+      NATUMAINI UMEVUTIWA NA ZAWADI ZANGU.  
+      UMBALI TULIONAO USIWE SABABU YA  
+      MIMI NA WEWE KUTOSHEREHEKEA SIKU HII.  
+      <br><br>
+      HUU NI UTHIBITISHO WA NAMNA  
+      NINAVYOKUPENDA NA KUKUJALI.  
+      SIKU HII IWE ALAMA YA  
+      KULIENZI NA KULIDUMISHA PENZI LETU.
+    </p>
+
+    <div class="upper-text">
+      NAKUTAKIA SIKU NJEMA NA WAKATI MWEMA 💛  
+      <br>
+      NAKUPENDA SANA 💕💕💕  
+      <br>
+      CHA MIDEKO WANGU
+    </div>
+
+    <div class="upper-text extra">
+      BADO KIDOGO SHAKIRA WANGU 💛
+    </div>
+  </div>
+</div>
+
+<script>
+function unlock(){
+  if(document.getElementById("pass").value!==""){
+    document.getElementById("lock").style.display="none";
+  }else{
+    alert("INGIZA NENOSIRI 💔");
+  }
+}
+
+function openEnvelope(){
+  const env=document.querySelector(".envelope");
+  const music=document.getElementById("music");
+  if(!env.classList.contains("open")){
+    env.classList.add("open");
+    music.play();
+    setInterval(createHeart,400);
+  }
+}
+
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💛";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(18+Math.random()*22)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+}
+</script>
+
+</body>
+  </html>
