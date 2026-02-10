@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<title>Bahasha ya Mapenzi 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:
+    radial-gradient(circle at center, rgba(255,0,100,.25), rgba(0,0,0,.7)),
+    url("background.jpg");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* LOCK */
+#lock{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.8);
+  display:flex; justify-content:center; align-items:center;
+  z-index:20;
+}
+.lock-box{
+  background:#fff; padding:25px;
+  border-radius:16px; text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+}
+.lock-box h2{ color:#ff2d75; }
+.lock-box input{
+  padding:10px; width:200px;
+  border-radius:8px; border:1px solid #ccc;
+}
+.lock-box button{
+  margin-top:15px; padding:10px 25px;
+  border:none; background:#ff2d75;
+  color:#fff; border-radius:8px;
+  font-size:16px; cursor:pointer;
+}
+
+/* GLOW WAVES */
+.wave{
+  position:absolute;
+  width:420px; height:260px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,0,120,.35), transparent 70%);
+  animation:pulse 4s infinite;
+  z-index:0;
+}
+@keyframes pulse{
+  0%{transform:scale(.9); opacity:.6;}
+  50%{transform:scale(1.1); opacity:1;}
+  100%{transform:scale(.9); opacity:.6;}
+}
+
+/* ENVELOPE */
+.envelope{
+  width:300px; height:200px;
+  background:#fff; border-radius:12px;
+  box-shadow:0 35px 90px rgba(0,0,0,.7);
+  position:relative; cursor:pointer;
+  transition:transform .6s;
+  z-index:2;
+}
+.envelope:hover{ transform:scale(1.06); }
+
+.flap{
+  position:absolute; inset:0;
+  background:linear-gradient(135deg,#ff2d75,#ff9abf);
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transition:transform 1s;
+  z-index:3;
+}
+
+.letter{
+  position:absolute; inset:12px;
+  background:rgba(255,255,255,.97);
+  border-radius:10px;
+  padding:20px;
+  text-align:center;
+  transform:translateY(130%);
+  transition:transform 1.4s cubic-bezier(.22,1,.36,1);
+  overflow-y:auto;
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+  transform-origin:top;
+}
+.envelope.open .letter{
+  transform:translateY(0);
+}
+
+/* TEXT */
+.letter h2{
+  font-size:26px;
+  background:linear-gradient(90deg,#ff006e,#ffd166,#ff006e);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 3s infinite;
+}
+@keyframes shine{
+  0%{filter:drop-shadow(0 0 6px #ff4d6d);}
+  50%{filter:drop-shadow(0 0 22px #ffd166);}
+  100%{filter:drop-shadow(0 0 6px #ff4d6d);}
+}
+.letter p{ color:#333; line-height:1.6; }
+.signature{
+  margin-top:15px; font-weight:bold;
+  font-size:18px; color:#ff006e;
+  text-shadow:0 0 20px #ff9acb;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed; bottom:-30px;
+  animation:floatUp 7s linear forwards;
+  pointer-events:none;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(.8) rotate(0deg); opacity:1;}
+  100%{transform:translateY(-110vh) scale(1.8) rotate(360deg); opacity:0;}
+}
+
+/* SPARKLES */
+.sparkle{
+  position:fixed;
+  width:6px; height:6px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 0 10px #fff;
+  animation:spark 2s linear forwards;
+}
+@keyframes spark{
+  0%{opacity:1; transform:scale(1);}
+  100%{opacity:0; transform:scale(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="lock">
+  <div class="lock-box">
+    <h2>💖 Ingiza Nenosiri 💖</h2>
+    <input type="password" id="pass">
+    <br>
+    <button onclick="unlock()">Fungua</button>
+  </div>
+</div>
+
+<div class="wave"></div>
+
+<audio id="music" loop playsinline>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" onclick="openEnvelope()">
+  <div class="flap"></div>
+  <div class="letter">
+    <h2>Happy Valentine Day 💕 Shakira</h2>
+    <p>
+      Happy valentine day Tamu yangu.<br><br>
+      Umbali tulionao isiwe sababu ya kutotunza
+      penzi letu. Huu ni uthibitisho
+      wa jinsi ninavyokupenda.
+    </p>
+    <div class="signature">
+      NAKUPENDA SANA 💕💕💕<br>
+      CHA MIDEKO WANGU
+    </div>
+  </div>
+</div>
+
+<script>
+function unlock(){
+  if(document.getElementById("pass").value==="Shakira"){
+    document.getElementById("lock").style.display="none";
+  }else{
+    alert("Nenosiri sio sahihi 💔");
+  }
+}
+
+function openEnvelope(){
+  const env=document.querySelector(".envelope");
+  const music=document.getElementById("music");
+  if(!env.classList.contains("open")){
+    env.classList.add("open");
+    music.play();
+    setInterval(createHeart,400);
+    setInterval(createSparkle,200);
+  }
+}
+
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(18+Math.random()*22)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+}
+
+function createSparkle(){
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+}
+</script>
+
+</body>
+  </html>
